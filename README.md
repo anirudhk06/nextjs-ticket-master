@@ -1,1 +1,1 @@
-# Event Managment using NextJS 16
+# Event Management using NextJS 16
