@@ -1,26 +1,354 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* ── Shadcn defaults (keep these untouched) ── */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  /* ── TicketHive tokens exposed to Tailwind v4 ──
+     These become Tailwind classes automatically:
+     bg-th-bg, text-th-amber, border-th-border etc. */
+  --color-th-bg:          var(--th-bg);
+  --color-th-surface:     var(--th-surface);
+  --color-th-surface-2:   var(--th-surface-2);
+  --color-th-card:        var(--th-card);
+  --color-th-ticket:      var(--th-ticket);
+  --color-th-border:      var(--th-border);
+  --color-th-border-2:    var(--th-border-2);
+  --color-th-amber:       var(--th-amber);
+  --color-th-amber-light: var(--th-amber-light);
+  --color-th-success:     var(--th-success);
+  --color-th-error:       var(--th-error);
+  --color-th-text:        var(--th-text);
+  --color-th-muted:       var(--th-muted);
+  --color-th-muted-2:     var(--th-muted-2);
+
+  /* ── TicketHive fonts exposed to Tailwind v4 ──
+     Usable as: font-display, font-body */
+  --font-display: "Bebas Neue", sans-serif;
+  --font-body:    "Outfit", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ═══════════════════════════════════════
+   SHADCN — LIGHT THEME (unchanged)
+═══════════════════════════════════════ */
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* ── TicketHive raw values ── */
+  --th-bg:          #0A0800;
+  --th-surface:     #110F04;
+  --th-surface-2:   #1A1705;
+  --th-card:        #141200;
+  --th-ticket:      #1E1A06;
+  --th-border:      #2A2610;
+  --th-border-2:    #3A3518;
+  --th-amber:       #F5A623;
+  --th-amber-light: #FFD166;
+  --th-amber-dim:   rgba(245, 166, 35, 0.12);
+  --th-amber-glow:  rgba(245, 166, 35, 0.25);
+  --th-success:     #06D6A0;
+  --th-error:       #E94560;
+  --th-text:        #F5F0E8;
+  --th-muted:       #7A7050;
+  --th-muted-2:     #A89870;
+}
+
+/* ═══════════════════════════════════════
+   SHADCN — DARK THEME (unchanged)
+═══════════════════════════════════════ */
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* ═══════════════════════════════════════
+   BASE
+═══════════════════════════════════════ */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /*
+    Add class="th-page" to your (customer)/layout.tsx
+    to activate the TicketHive dark theme on all customer pages.
+
+    Example:
+      export default function CustomerLayout({ children }) {
+        return <div className="th-page">{children}</div>
+      }
+  */
+  .th-page {
+    background-color: var(--th-bg);
+    color: var(--th-text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+  }
+
+  .th-page h1,
+  .th-page h2,
+  .th-page h3,
+  .th-page h4 {
+    font-family: var(--font-display);
+    letter-spacing: 1px;
+  }
+
+  .th-page ::-webkit-scrollbar       { width: 6px; }
+  .th-page ::-webkit-scrollbar-track { background: var(--th-surface); }
+  .th-page ::-webkit-scrollbar-thumb { background: var(--th-border-2); border-radius: 3px; }
+  .th-page ::-webkit-scrollbar-thumb:hover { background: var(--th-amber); }
+}
+
+/* ═══════════════════════════════════════
+   TICKETHIVE COMPONENTS
+   Prefixed with "th-" to avoid any clash with Shadcn
+═══════════════════════════════════════ */
+@layer components {
+
+  /* Buttons */
+  .th-btn-primary {
+    @apply px-5 py-2 rounded-md text-black text-[11px] font-bold uppercase tracking-[1px] transition-all duration-200 cursor-pointer;
+    background-color: var(--th-amber);
+    box-shadow: 0 0 20px var(--th-amber-glow);
+  }
+  .th-btn-primary:hover {
+    background-color: var(--th-amber-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 24px var(--th-amber-glow);
+  }
+
+  .th-btn-outline {
+    @apply px-4 py-2 rounded-md text-[11px] font-semibold uppercase tracking-[1px] transition-all duration-200 cursor-pointer;
+    border: 1px solid var(--th-border-2);
+    color: var(--th-muted-2);
+    background: transparent;
+  }
+  .th-btn-outline:hover {
+    border-color: var(--th-amber);
+    color: var(--th-amber);
+  }
+
+  .th-btn-danger {
+    @apply px-4 py-2 rounded-md text-[11px] font-bold uppercase tracking-[1px] transition-all duration-200 cursor-pointer;
+    border: 1px solid rgba(233, 69, 96, 0.3);
+    background: rgba(233, 69, 96, 0.08);
+    color: var(--th-error);
+  }
+  .th-btn-danger:hover { background: rgba(233, 69, 96, 0.15); }
+
+  /* Cards */
+  .th-card {
+    background-color: var(--th-card);
+    border: 1px solid var(--th-border);
+    border-radius: 14px;
+    transition: all 0.25s;
+  }
+  .th-card:hover {
+    border-color: var(--th-amber);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    transform: translateY(-3px);
+  }
+
+  .th-card-surface {
+    background-color: var(--th-surface-2);
+    border: 1px solid var(--th-border);
+    border-radius: 14px;
+  }
+
+  /* Inputs */
+  .th-input {
+    @apply w-full px-4 py-3 rounded-lg text-sm outline-none transition-all duration-200;
+    background-color: var(--th-surface);
+    border: 1px solid var(--th-border-2);
+    color: var(--th-text);
+    font-family: var(--font-body);
+  }
+  .th-input:focus        { border-color: var(--th-amber); }
+  .th-input::placeholder { color: var(--th-muted); }
+
+  .th-label {
+    @apply block text-[10px] font-bold uppercase tracking-[2px] mb-2;
+    color: var(--th-muted);
+  }
+
+  /* Badges */
+  .th-badge-amber {
+    @apply inline-flex items-center px-3 py-1 rounded text-[10px] font-bold uppercase tracking-[2px];
+    background: var(--th-amber-dim);
+    color: var(--th-amber);
+    border: 1px solid rgba(245, 166, 35, 0.25);
+  }
+  .th-badge-success {
+    @apply inline-flex items-center px-3 py-1 rounded text-[10px] font-bold uppercase tracking-[2px];
+    background: rgba(6, 214, 160, 0.12);
+    color: var(--th-success);
+    border: 1px solid rgba(6, 214, 160, 0.25);
+  }
+  .th-badge-error {
+    @apply inline-flex items-center px-3 py-1 rounded text-[10px] font-bold uppercase tracking-[2px];
+    background: rgba(233, 69, 96, 0.12);
+    color: var(--th-error);
+    border: 1px solid rgba(233, 69, 96, 0.25);
+  }
+  .th-badge-muted {
+    @apply inline-flex items-center px-3 py-1 rounded text-[10px] font-bold uppercase tracking-[2px];
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--th-muted-2);
+    border: 1px solid var(--th-border-2);
+  }
+
+  /* Category tags */
+  .th-tag-music  { @apply inline-flex px-2 py-1 rounded text-[9px] font-bold uppercase tracking-[1.5px]; background:rgba(180,0,255,0.12); color:#c060ff; border:1px solid rgba(180,0,255,0.2); }
+  .th-tag-tech   { @apply inline-flex px-2 py-1 rounded text-[9px] font-bold uppercase tracking-[1.5px]; background:rgba(0,180,255,0.12); color:#40c0ff; border:1px solid rgba(0,180,255,0.2); }
+  .th-tag-comedy { @apply inline-flex px-2 py-1 rounded text-[9px] font-bold uppercase tracking-[1.5px]; background:var(--th-amber-dim); color:var(--th-amber); border:1px solid rgba(245,166,35,0.2); }
+  .th-tag-sports { @apply inline-flex px-2 py-1 rounded text-[9px] font-bold uppercase tracking-[1.5px]; background:rgba(6,214,160,0.12); color:var(--th-success); border:1px solid rgba(6,214,160,0.2); }
+  .th-tag-food   { @apply inline-flex px-2 py-1 rounded text-[9px] font-bold uppercase tracking-[1.5px]; background:rgba(233,69,96,0.12); color:var(--th-error); border:1px solid rgba(233,69,96,0.2); }
+
+  /* Divider */
+  .th-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--th-amber), transparent);
+    opacity: 0.2;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ═══════════════════════════════════════
+   TAILWIND UTILITY SHORTCUTS
+═══════════════════════════════════════ */
+@layer utilities {
+  .th-font-display { font-family: var(--font-display); }
+  .th-font-body    { font-family: var(--font-body); }
+
+  .th-text-primary { color: var(--th-text); }
+  .th-text-amber   { color: var(--th-amber); }
+  .th-text-muted   { color: var(--th-muted); }
+  .th-text-muted-2 { color: var(--th-muted-2); }
+  .th-text-success { color: var(--th-success); }
+  .th-text-error   { color: var(--th-error); }
+
+  .th-bg-page      { background-color: var(--th-bg); }
+  .th-bg-surface   { background-color: var(--th-surface); }
+  .th-bg-surface-2 { background-color: var(--th-surface-2); }
+  .th-bg-card      { background-color: var(--th-card); }
+  .th-bg-ticket    { background-color: var(--th-ticket); }
+  .th-bg-amber     { background-color: var(--th-amber); }
+  .th-bg-amber-dim { background-color: var(--th-amber-dim); }
+
+  .th-border       { border-color: var(--th-border); }
+  .th-border-2     { border-color: var(--th-border-2); }
+  .th-border-amber { border-color: var(--th-amber); }
+
+  .th-shadow-amber    { box-shadow: 0 0 20px var(--th-amber-glow); }
+  .th-shadow-amber-lg { box-shadow: 0 6px 28px rgba(245,166,35,0.35); }
+  .th-glow-amber      { text-shadow: 0 0 30px rgba(245,166,35,0.4); }
 }

@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+tickethive-frontend/
+│
+├── app/
+│   ├── layout.tsx                          → Root layout (html, body, fonts)
+│   ├── not-found.tsx                       → Global 404 page
+│   │
+│   ├── (auth)/                             → No Navbar group
+│   │   ├── layout.tsx                      → Centered auth layout
+│   │   ├── login/
+│   │   │   └── page.tsx
+│   │   └── register/
+│   │       └── page.tsx
+│   │
+│   └── (customer)/                         → With Navbar group
+│       ├── layout.tsx                      → Navbar + th-page wrapper
+│       ├── page.tsx                        → / Landing page
+│       ├── events/
+│       │   ├── page.tsx                    → /events Listing + filters
+│       │   └── [id]/
+│       │       └── page.tsx               → /events/:id Detail page
+│       ├── book/
+│       │   └── [eventId]/
+│       │       └── page.tsx               → /book/:eventId Booking + payment
+│       └── my-tickets/
+│           └── page.tsx                   → /my-tickets
+│
+├── components/
+│   ├── ui/                                 → Shadcn auto-generated components
+│   │   ├── button.tsx
+│   │   ├── input.tsx
+│   │   ├── dialog.tsx
+│   │   ├── badge.tsx
+│   │   └── ...
+│   │
+│   ├── layout/                             → App shell components
+│   │   ├── Navbar.tsx
+│   │   ├── Footer.tsx
+│   │   └── PageWrapper.tsx
+│   │
+│   ├── event/                              → Event related components
+│   │   ├── EventCard.tsx
+│   │   ├── EventGrid.tsx
+│   │   ├── EventHero.tsx
+│   │   ├── EventMeta.tsx
+│   │   └── EventFilters.tsx
+│   │
+│   ├── ticket/                             → Ticket related components
+│   │   ├── TicketTierSelector.tsx
+│   │   ├── TicketCard.tsx
+│   │   ├── QRTicketModal.tsx
+│   │   └── TicketDownloadBtn.tsx
+│   │
+│   ├── booking/                            → Booking flow components
+│   │   ├── BookingSteps.tsx
+│   │   ├── AttendeeForm.tsx
+│   │   ├── OrderSummary.tsx
+│   │   └── PaymentButton.tsx
+│   │
+│   └── shared/                             → Reusable across features
+│       ├── CategoryPill.tsx
+│       ├── StatusBadge.tsx
+│       ├── SectionHeader.tsx
+│       ├── EmptyState.tsx
+│       ├── LoadingSpinner.tsx
+│       └── ErrorMessage.tsx
+│
+├── lib/
+│   ├── axios.ts                            → Axios instance + interceptors
+│   ├── razorpay.ts                         → Razorpay load + payment handler
+│   ├── utils.ts                            → cn(), formatDate(), formatPrice()
+│   └── constants.ts                        → API base URL, categories list etc.
+│
+├── hooks/
+│   ├── useAuth.ts                          → Auth state helpers
+│   ├── useEvents.ts                        → Fetch events (React Query)
+│   ├── useEventDetail.ts                   → Fetch single event
+│   ├── useBooking.ts                       → Booking flow logic
+│   └── useMyTickets.ts                     → Fetch user's tickets
+│
+├── services/                               → All API call functions
+│   ├── auth.service.ts                     → login, register, logout, refresh
+│   ├── event.service.ts                    → getEvents, getEventById, getSlots
+│   ├── booking.service.ts                  → createBooking, cancelBooking
+│   ├── payment.service.ts                  → createOrder, verifyPayment
+│   └── ticket.service.ts                   → getTickets, downloadTicket
+│
+├── store/
+│   └── authStore.ts                        → Zustand: user, token, login, logout
+│
+├── types/
+│   ├── auth.types.ts                       → User, LoginPayload, RegisterPayload
+│   ├── event.types.ts                      → Event, TicketTier, EventFilters
+│   ├── booking.types.ts                    → Booking, BookingItem, Attendee
+│   ├── payment.types.ts                    → Payment, RazorpayOrder
+│   └── ticket.types.ts                     → Ticket, QRTicket
+│
+├── public/
+│   └── images/
+│       └── placeholder-event.png
+│
+├── .env.local                              → Environment variables
+├── .env.example                            → Env template to commit
+├── next.config.ts
+├── tailwind.config.ts
+├── tsconfig.json
+└── package.json
