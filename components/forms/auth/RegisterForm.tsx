@@ -13,17 +13,14 @@ const RegisterForm = () => {
     })
 
     const router = useRouter()
-    const { setUser } = useAuthStore()
+    const { login } = useAuthStore()
 
     const { mutate, isPending } = useMutate({
         mutationFn: registerUser,
         setError,
         onSuccess: (data) => {
-            setUser({
-                user_id: data.user.user_id,
-                email: data.user.email,
-            })
-            router.push('/dashboard')
+            login(data.user, data.access, data.refresh)
+            router.push('/')
         },
     })
 

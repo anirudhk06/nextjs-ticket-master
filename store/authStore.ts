@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { getAccessToken, getRefreshToken, setTokens, clearTokens } from '@/lib/api/tokenService';
+import { setTokens, clearTokens } from '@/lib/api/tokenService';
 
 interface User {
   user_id: string;

@@ -10,7 +10,6 @@ export default function Navbar() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // ✅ Use selector (better performance)
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
 
@@ -24,7 +23,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    router.replace("/auth/login"); // better than push for logout
+    router.push("/auth/login");
   };
 
   return (

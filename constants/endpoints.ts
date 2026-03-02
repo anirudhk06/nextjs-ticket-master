@@ -13,4 +13,7 @@ export const API_ENDPOINTS = {
     WEEKEND: '/events?type=weekend',
     DETAIL: (id: string) => `/events/${id}`,
   },
+  CATEGORIES: {
+    LIST: 'api/categories',
+  },
 };

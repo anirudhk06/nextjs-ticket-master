@@ -1,14 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { CATEGORIES } from "@/data/mockEvents";
+import { useQuery } from "@tanstack/react-query";
+import { getCategories } from "@/services/category.service";
+import { Category } from "@/types/category.types";
+import { Skeleton } from "../ui/skeleton";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export default function CategoryBar() {
-  const [query, setQuery] = useState("");
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
 
-  const filteredCategories = CATEGORIES.filter((cat) =>
-    cat.label.toLowerCase().includes(query.toLowerCase())
-  );
+  const { data, isLoading } = useQuery({
+    queryKey: ["categories", debouncedSearch],
+    queryFn: () => getCategories(debouncedSearch),
+  });
+
+
+  const filterCategories = (query: string) => {
+    setSearch(query.trim());
+  }
+
+  const categories = data?.result || [];
 
   return (
     <section className="px-6 pb-6 md:px-12">
@@ -24,31 +37,43 @@ export default function CategoryBar() {
         <input
           type="text"
           placeholder="Search category..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
           className="th-input w-full md:w-64"
+          value={search}
+          onChange={(e) => filterCategories(e.target.value)}
         />
       </div>
 
-      {/* Category Pills */}
       <div className="flex flex-wrap gap-2">
-        {filteredCategories.map((cat) => (
-          <div
-            key={cat.value}
-            className="rounded px-4 py-2 text-[11px] font-semibold uppercase tracking-[1.5px] transition-all duration-200"
-            style={{
-              border: "1px solid var(--th-border-2)",
-              backgroundColor: "var(--th-surface-2)",
-              color: "var(--th-muted-2)",
-            }}
-          >
-            {cat.label}
-          </div>
-        ))}
+        {isLoading ? (
+          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+            <Skeleton
+              key={i}
+              className="h-8 w-24 rounded"
+              style={{
+                backgroundColor: "var(--th-surface-2)",
+                border: "1px solid var(--th-border-2)",
+              }}
+            />
+          ))
+        ) : (
+          categories.map((cat: Category) => (
+            <div
+              key={cat.id}
+              className="rounded px-4 py-2 text-[11px] font-semibold uppercase tracking-[1.5px] transition-all duration-200"
+              style={{
+                border: "1px solid var(--th-border-2)",
+                backgroundColor: "var(--th-surface-2)",
+                color: "var(--th-muted-2)",
+              }}
+              title={cat.description.slice(0, 100)}
+            >
+              {cat.name}
+            </div>
+          ))
+        )}
       </div>
 
-      {/* Empty State */}
-      {filteredCategories.length === 0 && (
+      {!isLoading && categories.length === 0 && (
         <div
           className="mt-4 text-[13px]"
           style={{ color: "var(--th-muted)" }}
