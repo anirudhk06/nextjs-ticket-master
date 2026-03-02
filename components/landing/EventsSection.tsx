@@ -3,6 +3,7 @@ import SectionHeader from "../shared/SectionHeader";
 import EventCard from "../shared/EventCard";
 import { useQuery } from "@tanstack/react-query";
 import { getNearbyEvents, getWeekendEvents } from "@/services/event.service";
+import { Skeleton } from "../ui/skeleton";
 
 type EventType = "nearby" | "weekend";
 
@@ -26,7 +27,7 @@ const queryConfig: Record<EventType, { queryKey: string[]; queryFn: () => Promis
 export default function EventsSection({ title, href, type }: Props) {
   const { queryKey, queryFn } = queryConfig[type];
 
-  const { data: events = [], isLoading, error, refetch } = useQuery({
+  const { data: { result: events = [] } = {}, isLoading, error, refetch } = useQuery({
     queryKey,
     queryFn,
   });
@@ -39,10 +40,49 @@ export default function EventsSection({ title, href, type }: Props) {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="h-64 animate-pulse rounded-2xl"
-              style={{ background: "var(--th-surface)" }}
-            />
+              className="th-card overflow-hidden rounded-2xl border"
+              style={{
+                backgroundColor: "var(--th-surface-2)",
+                borderColor: "var(--th-border-2)",
+              }}
+            >
+              {/* Image Area Skeleton */}
+              <Skeleton className="h-36 w-full rounded-none" style={{
+                borderColor: "var(--th-border-2)",
+              }} />
+
+              {/* Body Skeleton */}
+              <div className="p-4 space-y-3">
+                {/* Title */}
+                <Skeleton className="h-5 w-3/4 rounded-md" style={{
+                  borderColor: "var(--th-border-2)",
+                }} />
+
+                {/* Info Lines */}
+                <div className="space-y-2">
+                  <Skeleton className="h-3 w-1/2 rounded-md" style={{
+                    borderColor: "var(--th-border-2)",
+                  }} />
+                  <Skeleton className="h-3 w-2/3 rounded-md" style={{
+                    borderColor: "var(--th-border-2)",
+                  }} />
+                </div>
+
+                {/* Footer divider */}
+                <div className="border-t pt-3" style={{ borderColor: "var(--th-border-2)" }}>
+                  <div className="flex justify-between">
+                    <Skeleton className="h-4 w-12 rounded-md" style={{
+                      borderColor: "var(--th-border-2)",
+                    }} />
+                    <Skeleton className="h-4 w-8 rounded-md" style={{
+                      borderColor: "var(--th-border-2)",
+                    }} />
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
+
         </div>
       </section>
     );

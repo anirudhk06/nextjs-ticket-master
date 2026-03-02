@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Event } from "@/data/mockEvents";
+import { Event } from "@/types/event.types";
 import PriceDisplay from "@/components/shared/PriceDisplay";
 import AvailabilityDot from "@/components/shared/AvailabilitySlot"
 import CategoryTag from "@/components/shared/CategoryTag";
-import SeatInfo from "@/components/shared/SeatInfo";
+import { formatEventDate } from "@/utils/formatDate";
+import SeatInfo from "./SeatInfo";
 
 export default function EventCard({ event }: { event: Event }) {
     return (
@@ -16,10 +17,10 @@ export default function EventCard({ event }: { event: Event }) {
             {/* Image Area */}
             <div
                 className="relative flex h-36 items-center justify-center text-5xl"
-                style={{ background: event.bgGradient }}
+                style={{ background: event.bg_color }}
             >
-                {event.emoji}
-                <CategoryTag type={event.categoryStyle} />
+
+                <CategoryTag type={event.category.name} />
                 <AvailabilityDot event={event} />
             </div>
 
@@ -29,7 +30,7 @@ export default function EventCard({ event }: { event: Event }) {
                     className="th-font-display mb-1 text-lg leading-tight tracking-wide"
                     style={{ color: "var(--th-text)" }}
                 >
-                    {event.title}
+                    {event.name}
                 </h3>
 
                 <div
@@ -37,10 +38,10 @@ export default function EventCard({ event }: { event: Event }) {
                     style={{ color: "var(--th-muted-2)" }}
                 >
                     <span>
-                        📅 {event.date} · {event.time}
+                        📅 {formatEventDate(event.start_at).date} · {formatEventDate(event.start_at).time}
                     </span>
                     <span>
-                        📍 {event.venue}, {event.city}
+                        📍 {event.venue_address}
                     </span>
                 </div>
 
@@ -50,7 +51,7 @@ export default function EventCard({ event }: { event: Event }) {
                     style={{ borderColor: "var(--th-border)" }}
                 >
                     <PriceDisplay price={event.price} />
-                    {/* <SeatInfo event={event} /> */}
+                    <SeatInfo event={event} />
                 </div>
             </div>
         </Link>

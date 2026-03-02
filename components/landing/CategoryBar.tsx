@@ -48,10 +48,9 @@ export default function CategoryBar() {
           [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
             <Skeleton
               key={i}
-              className="h-8 w-24 rounded"
+              className="h-8 w-24 rounded border"
               style={{
-                backgroundColor: "var(--th-surface-2)",
-                border: "1px solid var(--th-border-2)",
+                borderColor: "var(--th-border-2)",
               }}
             />
           ))

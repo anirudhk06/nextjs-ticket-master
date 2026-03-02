@@ -9,8 +9,8 @@ export const API_ENDPOINTS = {
 
   EVENTS: {
     LIST: '/events',
-    NEARBY: '/events?type=nearby',
-    WEEKEND: '/events?type=weekend',
+    NEARBY: 'api/events?type=nearby',
+    WEEKEND: 'api/events?type=weekend',
     DETAIL: (id: string) => `/events/${id}`,
   },
   CATEGORIES: {
