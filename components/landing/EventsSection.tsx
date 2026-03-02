@@ -166,6 +166,17 @@ export default function EventsSection({ title, href, type }: Props) {
     );
   }
 
+  if (!isLoading && events.length == 0) {
+    return (
+      <section className="mb-14">
+        <SectionHeader title={title} href={href} />
+        <div className="grid grid-cols-1 gap-5 px-6 sm:grid-cols-2 md:px-12 lg:grid-cols-3">
+          <h2 className="text-white">Events not found</h2>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="mb-14">
       <SectionHeader title={title} href={href} />
