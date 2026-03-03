@@ -1,14 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { Event } from "@/types/event.types";
+import { NearestWeekdayEvent } from "@/types/event.types";
 import PriceDisplay from "@/components/shared/PriceDisplay";
 import AvailabilityDot from "@/components/shared/AvailabilitySlot"
 import CategoryTag from "@/components/shared/CategoryTag";
 import { formatEventDate } from "@/utils/formatDate";
-import SeatInfo from "./SeatInfo";
 
-export default function EventCard({ event }: { event: Event }) {
+export default function EventCard({ event }: { event: NearestWeekdayEvent }) {
     return (
         <Link
             href={`/events/${event.id}`}
@@ -19,8 +18,9 @@ export default function EventCard({ event }: { event: Event }) {
                 className="relative flex h-36 items-center justify-center text-5xl"
                 style={{ background: event.bg_color }}
             >
+                {event.category__emoji}
 
-                <CategoryTag type={event.category.name} />
+                <CategoryTag type={event.category__name} />
                 <AvailabilityDot event={event} />
             </div>
 
@@ -41,7 +41,7 @@ export default function EventCard({ event }: { event: Event }) {
                         📅 {formatEventDate(event.start_at).date} · {formatEventDate(event.start_at).time}
                     </span>
                     <span>
-                        📍 {event.venue_address}
+                        📍 {event.venue_name}
                     </span>
                 </div>
 
@@ -50,8 +50,7 @@ export default function EventCard({ event }: { event: Event }) {
                     className="flex items-center justify-between border-t pt-3"
                     style={{ borderColor: "var(--th-border)" }}
                 >
-                    <PriceDisplay price={event.price} />
-                    <SeatInfo event={event} />
+                    <PriceDisplay price={event.starting_from} />
                 </div>
             </div>
         </Link>

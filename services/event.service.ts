@@ -1,14 +1,15 @@
 import { api } from '@/lib/api/api';
 import { API_ENDPOINTS } from '@/constants/endpoints';
-import { EventResponse } from '@/types/response.types';
+import { EventResponse, NearbyWeekendResponse } from '@/types/response.types';
+import { NearestWeekdayEvent } from '@/types/event.types';
 
 export const getEvents = async () => {
   const response = await api.get<EventResponse>(API_ENDPOINTS.EVENTS.LIST);
   return response.data;
 };
 
-export const getNearbyEvents = async () => {
-  const response = await api.get<EventResponse>(API_ENDPOINTS.EVENTS.NEARBY, {
+export const getNearbyWeekendEvents = async () => {
+  const response = await api.get<NearbyWeekendResponse>(API_ENDPOINTS.EVENTS.NEARBY_WEEKEND, {
     params: {
       page_size: 3,
     },
@@ -16,11 +17,7 @@ export const getNearbyEvents = async () => {
   return response.data;
 };
 
-export const getWeekendEvents = async () => {
-  const response = await api.get<EventResponse>(API_ENDPOINTS.EVENTS.WEEKEND, {
-    params: {
-      page_size: 3,
-    },
-  });
+export const getFeaturedEvent = async () => {
+  const response = await api.get<NearestWeekdayEvent>(API_ENDPOINTS.EVENTS.FEATURED_EVENT);
   return response.data;
 };

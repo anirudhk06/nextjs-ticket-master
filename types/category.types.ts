@@ -5,6 +5,7 @@ export interface Category {
   name: string;
   slug: string;
   description: string;
+  emoji: string;
 }
 
 export interface CategoryResponse {

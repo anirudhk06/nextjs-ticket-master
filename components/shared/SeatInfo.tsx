@@ -1,8 +1,8 @@
 "use client";
 
-import { Event } from "@/types/event.types";
+import { NearestWeekdayEvent } from "@/types/event.types";
 
-export default function SeatInfo({ event }: { event: Event }) {
+export default function SeatInfo({ event }: { event: NearestWeekdayEvent }) {
   // if (event.soldOut) {
   //   return (
   //     <span
@@ -30,7 +30,7 @@ export default function SeatInfo({ event }: { event: Event }) {
       className="text-[10px]"
       style={{ color: "var(--th-muted)" }}
     >
-      {event.capacity} left
+      {event.total_quantity} left
     </span>
   );
 }

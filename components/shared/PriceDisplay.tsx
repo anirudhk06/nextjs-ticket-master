@@ -1,12 +1,12 @@
 "use client";
 
 interface Props {
-  price: number | null | undefined;
+  price: number | null | undefined | string;
   className?: string;
 }
 
 export default function PriceDisplay({ price, className = "" }: Props) {
-  if (price === null || price === undefined) {
+  if (price === null || price === undefined || Number(price) === 0) {
     return (
       <span
         className={`th-font-display text-lg ${className}`}

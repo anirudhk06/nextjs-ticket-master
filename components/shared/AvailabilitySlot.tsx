@@ -1,8 +1,8 @@
 "use client";
 
-import { Event } from "@/types/event.types";
+import { Event, NearestWeekdayEvent } from "@/types/event.types";
 
-export default function AvailabilityDot({ event }: { event: Event }) {
+export default function AvailabilityDot({ event }: { event: NearestWeekdayEvent }) {
   // if (event.soldOut) {
   //   return (
   //     <span

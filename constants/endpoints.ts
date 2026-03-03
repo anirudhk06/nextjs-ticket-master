@@ -1,3 +1,5 @@
+import { FEATURED_EVENT } from '@/data/mockEvents';
+
 export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: '/auth/sign-in',
@@ -9,8 +11,8 @@ export const API_ENDPOINTS = {
 
   EVENTS: {
     LIST: '/events',
-    NEARBY: 'api/events?type=nearby',
-    WEEKEND: 'api/events?type=weekend',
+    NEARBY_WEEKEND: 'api/events/nearest-weekend',
+    FEATURED_EVENT: 'api/events/featured',
     DETAIL: (id: string) => `/events/${id}`,
   },
   CATEGORIES: {
